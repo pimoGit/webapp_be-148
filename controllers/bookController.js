@@ -35,7 +35,10 @@ function show(req, res) {
         // gestiamo anche il 404
         if (bookResult.length === 0) return res.status(404).json({ error: "Book not found" })
 
+        // creiamo oggetto singolo libro
         const singleBook = bookResult[0];
+        singleBook.image = req.imagePath + singleBook.image;
+
 
         // aggiungiamo connesione per richiesta reviews relative
         connection.query(reviewSql, [id], (err, reviewResult) => {

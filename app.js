@@ -14,6 +14,9 @@ const errorServer = require("./middlewares/errorServer");
 // importiamo globalmente il middleware di gestione 404 per rotta inesistente
 const notFound = require("./middlewares/notFound");
 
+// importiamo middleware gestione path imgs
+const imagePath = require("./middlewares/imagePath");
+
 
 // usiamo il middleware static di express (per rendere disponibile i file statici)
 app.use(express.static('public'));
@@ -21,6 +24,8 @@ app.use(express.static('public'));
 // registro il body-parser per "application/json"
 app.use(express.json());
 
+// registro il middleware gestione path imgs per le rotte
+app.use(imagePath);
 
 // rotte per i books
 app.use("/api/books", bookRouter);
