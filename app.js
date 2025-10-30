@@ -6,7 +6,7 @@ const app = express();
 const port = 3000;
 
 // importiamo modulo router books
-// const pizzaRouter = require("./routers/pizzas")
+const bookRouter = require("./routers/bookRouter")
 
 
 // importiamo globalmente il middleware di gestione errore server
@@ -23,7 +23,7 @@ app.use(express.json());
 
 
 // rotte per i books
-// app.use("/pizzas", pizzaRouter);
+app.use("/api/books", bookRouter);
 
 // impostiamo la rotta di home
 app.get("/api", (req, res) => {
