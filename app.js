@@ -10,9 +10,9 @@ const port = 3000;
 
 
 // importiamo globalmente il middleware di gestione errore server
-// const errorServer = require("./middlewares/errorServer");
+const errorServer = require("./middlewares/errorServer");
 // importiamo globalmente il middleware di gestione 404 per rotta inesistente
-// const notFound = require("./middlewares/notFound");
+const notFound = require("./middlewares/notFound");
 
 
 // usiamo il middleware static di express (per rendere disponibile i file statici)
@@ -34,10 +34,10 @@ app.get("/", (req, res) => {
 
 
 // richiamo middleware gestione errori server
-// app.use(errorServer);
+app.use(errorServer);
 
 // richiamo middleware gestione errore 404 rotta inesistente
-// app.use(notFound);
+app.use(notFound);
 
 
 
