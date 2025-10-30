@@ -26,9 +26,8 @@ app.use(express.json());
 // app.use("/pizzas", pizzaRouter);
 
 // impostiamo la rotta di home
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
     console.log("hai richiesto la rotta di index");
-
     res.send('<h1>Ecco la home della API della nostra libreria</h1>')
 })
 
