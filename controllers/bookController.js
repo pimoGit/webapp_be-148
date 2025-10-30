@@ -25,14 +25,31 @@ function show(req, res) {
     // prepariamo query per singolo libro
     const bookSql = 'SELECT * FROM books WHERE id = ?';
 
+    // prepariamo la query per reviews del book
+    const reviewSql = 'SELECT * FROM reviews WHERE book_id = ?';
+
     // aggiungiamo la connesione per la richiesta
     connection.query(bookSql, [id], (err, bookResult) => {
         // gestiamo errore server mysql
         if (err) return res.status(500).json({ error: "Database error" })
         // gestiamo anche il 404
-        if (bookResult.length === 0) res.status(404).json({ error: "Book not found" })
-        // ritorniamo il risultato ottenuto
-        res.json(bookResult[0]);
+        if (bookResult.length === 0) return res.status(404).json({ error: "Book not found" })
+
+        const singleBook = bookResult[0];
+
+        // aggiungiamo connesione per richiesta reviews relative
+        connection.query(reviewSql, [id], (err, reviewResult) => {
+            // gestiamo errore server mysql
+            if (err) return res.status(500).json({ error: "Database error" })
+            // aggiungiamo le reviews sull'oggetto del singolo libro
+            singleBook.reviews = reviewResult;
+
+
+            // ritorniamo il risultato ottenuto
+            res.json(singleBook);
+        });
+
+
     });
 
 }
