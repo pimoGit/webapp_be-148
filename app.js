@@ -17,6 +17,15 @@ const notFound = require("./middlewares/notFound");
 // importiamo middleware gestione path imgs
 const imagePath = require("./middlewares/imagePath");
 
+// importiamo middleware CORS
+const cors = require("cors");
+
+
+
+// middleware per il CORS
+app.use(cors({
+    origin: process.env.FE_APP
+}));
 
 // usiamo il middleware static di express (per rendere disponibile i file statici)
 app.use(express.static('public'));
