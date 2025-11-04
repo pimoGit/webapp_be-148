@@ -32,7 +32,12 @@ function show(req, res) {
     const id = req.params.id;
 
     // prepariamo query per singolo libro
-    const bookSql = 'SELECT * FROM books WHERE id = ?';
+    // const bookSql = 'SELECT * FROM books WHERE id = ?';
+    const bookSql = `SELECT B.*, ROUND(AVG(R.vote)) AS average_vote
+    FROM books B 
+    LEFT JOIN reviews R 
+    ON R.book_id = B.id 
+    WHERE B.id = ?`
 
     // prepariamo la query per reviews del book
     const reviewSql = 'SELECT * FROM reviews WHERE book_id = ?';
@@ -56,6 +61,7 @@ function show(req, res) {
             // aggiungiamo le reviews sull'oggetto del singolo libro
             singleBook.reviews = reviewResult;
 
+            singleBook.average_vote = parseInt(singleBook.average_vote);
 
             // ritorniamo il risultato ottenuto
             res.json(singleBook);
