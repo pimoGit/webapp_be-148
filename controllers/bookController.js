@@ -11,8 +11,17 @@ function index(req, res) {
     connection.query(sql, (err, result) => {
         // gestiamo errore server mysql
         if (err) return res.status(500).json({ error: "Database error" })
+
+        // prepariamo versione listato books con valore image completo
+        const books = result.map(book => {
+            return {
+                ...book,
+                image: req.imagePath + book.image
+            }
+        });
+
         // ritorniamo il risultato ottenuto
-        res.json(result);
+        res.json(books);
     });
 
 }
