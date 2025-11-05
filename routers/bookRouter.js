@@ -13,4 +13,7 @@ router.get('/', bookController.index)
 // show
 router.get('/:id', bookController.show)
 
+// Store reviews
+router.post('/:id/reviews', bookController.storeReview)
+
 module.exports = router;

@@ -72,4 +72,27 @@ function show(req, res) {
 
 }
 
-module.exports = { index, show }
+// Store review
+function storeReview(req, res) {
+
+    // recuperiamo id da param
+    const id = req.params.id;
+
+    // recuperiamo i dati nel body
+    const { name, vote, text } = req.body;
+
+    // prepariamo la query per la chiamata al DB
+    const sql = 'INSERT INTO `reviews` (`name`, `vote`, `text`, `book_id`) VALUES (?,?,?,?)';
+
+    // eseguiamo la query (con check preventivo dei dati)
+    connection.query(sql, [name, vote, text, id], (err, result) => {
+        // se c'è errore server DB
+        if (err) return res.status(500).json({ error: 'Database queri failed' });
+        // se va tutto bene
+        res.status(201);
+        res.json({ id: result.insertId, message: 'Review added' });
+    })
+
+}
+
+module.exports = { index, show, storeReview }
