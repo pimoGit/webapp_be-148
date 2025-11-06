@@ -95,4 +95,29 @@ function storeReview(req, res) {
 
 }
 
-module.exports = { index, show, storeReview }
+// store book
+function store(req, res) {
+    const { title, author, abstract } = req.body;
+
+    const imageName = `${req.file.filename}`;
+
+    const query =
+        "INSERT INTO books (title, author, image, abstract) VALUES (?, ?, ?, ?)";
+
+    connection.query(
+        query,
+        [title, author, imageName, abstract],
+        (err, result) => {
+            if (err) {
+                console.log(err)
+                return next(new Error("Errore interno del server"));
+            }
+
+            res.status(201).json({
+                status: "success",
+                message: "Libro creato con successo!",
+            });
+        })
+}
+
+module.exports = { index, show, storeReview, store }
